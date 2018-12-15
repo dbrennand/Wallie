@@ -4,16 +4,27 @@ try:
 except ImportError as err:
     print(f"Failed to import modules: {err}")
 
+def parse_resp(json: dict):
+    """From JSON resp, collect the top 4 images from results"""
+    images = []
+    for num, item in enumerate(json["results"], 1):
+        image_info = {"author_name": item["user"]["name"], "author_profile": f"{item['user']['links']['html']}?utm_source=your_app_name&utm_medium=referral", "full_image": item["urls"]["full"]} 
+        images.append(image_info)
+    return images
+
+def present_images(images: dict):
+    for num, images in enumerate(images, 1):
+        click.secho(f"""Image: {num} -- By {images["author_name"]} -- Profile: {images["author_profile"]}""", fg="bright_yellow")
 
 def make_request(api, subject):
     headers = {"Accept-Version": "v1", "Authorization": f"Client-ID {CLIENT_ID}"}
     if api == "unsplash":
         endpoint = "https://api.unsplash.com"
         try:
-            if subject not None:
+            if subject != None:
                 endpoint = f"{endpoint}/search/photos"
-                resp = requests.get(endpoint, params={"query": subject}, headers=headers)
-            # If subject is other than None
+                resp = requests.get(endpoint, params={"query": subject, "per_page": 4}, headers=headers)
+            # else: subject is None
             else:
                 endpoint = f"{endpoint}/photos/random"
                 resp = requests.get(endpoint, headers=headers)
@@ -21,13 +32,13 @@ def make_request(api, subject):
                 return resp.json()
             else:
                 # Raise the error if status code is not ok ie evaluates to True.
-                resp.raise_for_status()
+                click.secho(resp.raise_for_status(), err=True)
         except requests.exceptions.TooManyRedirects:
-            click.secho("Request exceeded the acceptable number of redirects.", fg="bright_yellow")
+            click.secho("Request exceeded the acceptable number of redirects.", fg="bright_yellow", err=True)
         except requests.exceptions.Timeout:
-            click.secho("Request timed out.", fg="bright_yellow")
+            click.secho("Request timed out.", fg="bright_yellow", err=True)
         except requests.exceptions.HTTPError as err:
-            click.secho(f"The following HTTPError occured {err}", fg="bright_yellow")
+            click.secho(f"The following HTTPError occured {err}", fg="bright_yellow", err=True)
 
 @click.command()
 @click.option("--api", default="unsplash", required=True, show_default=True, help="API to use.", type=str)
@@ -36,7 +47,9 @@ def set(api, subject):
     """Sets the Wallpaper of the device"""
     click.secho(f"Searching {api} for {subject} images...", fg="bright_yellow")
     resp = make_request(api, subject)
-    click.secho(resp, fg="bright_yellow")
+    images = parse_resp(resp)
+    present_images(images)
+
 
 def wallie_version(ctx, param, value):
     """Prints the version of Wallie"""
