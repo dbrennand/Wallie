@@ -3,11 +3,12 @@ try:
     from os.path import abspath
     from huepy import yellow
     from config import UNSPLASH_CLIENT_ID
+    from utils import download_image
 except ImportError as err:
     print(f"Failed to import modules: {err}")
 
 
-def parse_resp(json: dict):
+def unsplash_parse_resp(json: dict):
     """From JSON resp, collect the top 4 images from results."""
     images = []
     for num, item in enumerate(json["results"], 1):
@@ -17,16 +18,6 @@ def parse_resp(json: dict):
         image_list.append(image_info)
         images.append(image_list)
     return images
-
-
-def present_images(images):
-    """Present image choices to the user and request choice."""
-    for num, item in enumerate(images, 0):
-        click.secho(
-            f"""Image: {num} -- {item[0]["author_name"]}\nProfile: {item[0]["author_profile"]}\nImage Link: {item[0]["full_image"]}\n""", fg="bright_yellow")
-    user_choice = int(input(yellow("Select your preferred image: ")))
-    user_choice = images[user_choice]
-    return user_choice
 
 
 def trigger_download(download_location):
@@ -51,11 +42,14 @@ def trigger_download(download_location):
             f"The following HTTPError occured {err}", fg="bright_yellow", err=True)
 
 
-def download_image(image_url, file_name):
-    """Download the users specified image to the project directory."""
-    subprocess.run(["wget", "-O", f"{file_name}.jpg", f"{image_url}"])
-    click.secho("Download Complete!", fg="bright_yellow")
-    return f"{file_name}.jpg"
+def present_images(images):
+    """Present image choices to the user and request choice."""
+    for num, item in enumerate(images, 0):
+        click.secho(
+            f"""Image: {num} -- {item[0]["author_name"]}\nProfile: {item[0]["author_profile"]}\nImage Link: {item[0]["full_image"]}\n""", fg="bright_yellow")
+    user_choice = int(input(yellow("Select your preferred image: ")))
+    user_choice = images[user_choice]
+    return user_choice
 
 
 def make_request(api, subject):
@@ -95,7 +89,7 @@ def set(api, subject):
     """Sets the Wallpaper of the device."""
     click.secho(f"Searching {api} for {subject} images...", fg="bright_yellow")
     resp = make_request(api, subject)
-    images = parse_resp(resp)
+    images = unsplash_parse_resp(resp)
     user_choice = present_images(images)
     trigger_download(user_choice[0]["download_location"])
     file_name = download_image(user_choice[0]["full_image"], subject)
@@ -103,7 +97,6 @@ def set(api, subject):
         f"Attempting to set desktop image to {file_name}", fg="bright_yellow")
     try:
         abs_path = abspath(f"./{file_name}")
-        click.secho(f"{abs_path}", fg="bright_yellow")
         SCRIPT = """osascript -e 'tell application "Finder" to set desktop picture to "%s" as POSIX file'"""
         subprocess.run(SCRIPT % abs_path, shell=True)
     except subprocess.CalledProcessError as err:
