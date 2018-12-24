@@ -7,7 +7,9 @@ except ImportError as err:
 
 
 def unsplash_parse_resp(subject):
-    """From Unsplash API, collect the top 4 images from results."""
+    """From Unsplash API, collect the top 4 images from results.
+    Returns:
+        images nested dict."""
     py_un = PyUnsplash(api_key=UNSPLASH_CLIENT_ID)
     search = py_un.search("photos", query=subject, per_page=4)
     images = []
@@ -22,6 +24,8 @@ def unsplash_parse_resp(subject):
 
 def unsplash_trigger_download(download_location):
     """Trigger a download event to Unsplash API.
+    Returns:
+        None.
     More Info: https://medium.com/unsplash/unsplash-api-guidelines-triggering-a-download-c39b24e99e02"""
     try:
         resp = requests.get(download_location, headers={
