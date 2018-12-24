@@ -10,7 +10,7 @@ def download_image(image_url, file_name):
     """Download the users specified image to the project directory.
     Returns:
         file_name string."""
-    subprocess.run(["wget", "-O", f"{file_name}.jpg", f"{image_url}"])
+    subprocess.run(["wget", "-O", f"{file_name}.jpg", f"{image_url}", "-q", "--show-progress"])
     click.secho("Download Complete!", fg="bright_yellow")
     return f"{file_name}.jpg"
 
