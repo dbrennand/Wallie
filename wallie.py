@@ -1,10 +1,10 @@
 try:
     # File imports.
-    import click, subprocess
+    import click
     from os.path import abspath
     # Other file imports.
     from config import UNSPLASH_CLIENT_ID
-    from utils import download_image, present_images
+    from utils import download_image, present_images, check_os
     from unsplash import unsplash_parse_resp, unsplash_trigger_download
     from pexels import pexels_parse_resp
 except ImportError as err:
@@ -24,17 +24,18 @@ def set(api, subject):
     elif api == "pexels":
         images = pexels_parse_resp(subject)
         user_choice = present_images(images)
+    else:
+        click.secho("Invalid API option.", fg="bright_yellow")
+        exit()
     file_name = download_image(user_choice[0]["full_image"], subject)
     click.secho(
         f"Attempting to set desktop image to {file_name}", fg="bright_yellow")
-    try:
-        abs_path = abspath(f"./{file_name}")
-        SCRIPT = """osascript -e 'tell application "Finder" to set desktop picture to "%s" as POSIX file'"""
-        subprocess.run(SCRIPT % abs_path, shell=True)
+    abs_path = abspath(f"./{file_name}")
+    condition = check_os(abs_path)
+    if condition is False:
+        exit()
+    else:
         click.secho("Wallpaper set successfully!", fg="bright_yellow")
-    except subprocess.CalledProcessError as err:
-        click.secho(
-            f"Failed to set desktop wallpaper with the following error:\n{err}", fg="bright_yellow")
 
 
 def wallie_version(ctx, param, value):
