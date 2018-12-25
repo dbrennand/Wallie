@@ -1,6 +1,8 @@
 try:
-    import subprocess, click, os
+    import subprocess, click, os, requests
+    from math import ceil
     from platform import system
+    from tqdm import tqdm
     from huepy import yellow
 except ImportError as err:
     print(f"Failed to import required modules: {err}")
@@ -10,7 +12,21 @@ def download_image(image_url, file_name):
     """Download the users specified image to the project directory.
     Returns:
         file_name string."""
-    subprocess.run(["wget", "-O", f"{file_name}.jpg", f"{image_url}", "-q", "--show-progress"])
+    with requests.get(image_url, stream=True) as resp:
+        if resp.status_code == 200:
+            block_size = 1024
+            total_size = int(resp.headers["Content-Length"])
+            try:
+                with open(f"{file_name}.jpg", "wb") as f:
+                    for chunk in tqdm(iterable=resp.iter_content(block_size), total=ceil(total_size//block_size), unit="KB", unit_scale=True, desc=f"Downloading {file_name}.jpg"):
+                        f.write(chunk)
+                    f.close()
+            except IOError:
+                click.secho(f"Failed to create {file_name}.jpg", fg="bright_yellow", err=True)
+                exit()
+        else:
+            click.secho(f"{resp.raise_for_status()}", fg="bright_yellow")
+            exit()
     click.secho("Download Complete!", fg="bright_yellow")
     return f"{file_name}.jpg"
 
