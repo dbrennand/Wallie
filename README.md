@@ -16,11 +16,11 @@ Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper
 * Add support for other OSs (Windows specifically) ✅
 * Add support for more APIs.
 * Exception handling for download_image(). 
-* Remove wget dependancy and add progress bar.
+* Remove wget dependancy and add progress bar. ✅
+* Correct colours on progress bar.
 
 ## Dependancies
 Wallie currently requires:
-* wget
 ```
 requests = "*"
 click = "*"
