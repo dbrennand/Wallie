@@ -3,7 +3,6 @@ try:
     import click
     from os.path import abspath
     # Other file imports.
-    from config import UNSPLASH_CLIENT_ID
     from utils import download_image, present_images, check_os
     from unsplash import unsplash_parse_resp, unsplash_trigger_download
     from pexels import pexels_parse_resp
