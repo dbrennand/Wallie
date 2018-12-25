@@ -22,7 +22,7 @@ Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper
 ## Dependancies
 Wallie currently requires:
 ```
-packages]
+[packages]
 requests = "*"
 click = "*"
 colorama = "*"
