@@ -22,12 +22,14 @@ Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper
 ## Dependancies
 Wallie currently requires:
 ```
+packages]
 requests = "*"
 click = "*"
 colorama = "*"
 huepy = "*"
 pypexels = "*"
 pyunsplash = "*"
+tqdm = "*"
 
 [requires]
 python_version = "3.7"
