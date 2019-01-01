@@ -11,10 +11,8 @@ autopep8 = "*"
 requests = "*"
 click = "*"
 colorama = "*"
-huepy = "*"
 pypexels = "*"
 pyunsplash = "*"
-tqdm = "*"
 
 [requires]
 python_version = "3.7"
