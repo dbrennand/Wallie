@@ -41,7 +41,7 @@ def wallie_version(ctx, param, value):
     """Prints the version of Wallie."""
     if not value or ctx.resilient_parsing:
         return
-    click.secho("Version - 0.2", fg="bright_yellow")
+    click.secho("Version - 1.0", fg="bright_yellow")
     ctx.exit()
 
 
