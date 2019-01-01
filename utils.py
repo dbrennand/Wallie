@@ -12,15 +12,14 @@ def download_image(image_url, file_name):
     """Download the users specified image to the project directory.
     Returns:
         file_name string."""
-    with requests.get(image_url, stream=True, allow_redirects=False) as resp:
-        if resp.status_code == 200:
+    with requests.get(image_url, stream=True) as resp:
+        if ((resp.status_code) == (requests.codes.ok)):
             block_size = 1024
-            total_size = int(resp.headers.get("content-length"))
+            total_size = int(resp.headers["content-length"])
             try:
                 with open(f"{file_name}.jpg", "wb") as f:
                     for chunk in tqdm(iterable=resp.iter_content(block_size), total=ceil(total_size//block_size), unit="KB", unit_scale=True, desc=f"Downloading {file_name}.jpg"):
                         f.write(chunk)
-                    f.close()
             except IOError:
                 click.secho(f"Failed to create {file_name}.jpg", fg="bright_yellow", err=True)
                 exit()
