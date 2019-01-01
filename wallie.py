@@ -14,7 +14,7 @@ except ImportError as err:
 @click.option("--api", default="unsplash", required=True, show_default=True, help="API to use.", type=str)
 @click.argument("subject", default="Space", type=str)
 def set(api, subject):
-    """Sets the Wallpaper of the device. TODO: Add support for other OSs"""
+    """Sets the Wallpaper of the device."""
     click.secho(f"Searching {api} for {subject} images...", fg="bright_yellow")
     if api == "unsplash":
         images = unsplash_parse_resp(subject)
