@@ -1,5 +1,5 @@
 try:
-    import subprocess, click, os, requests
+    import subprocess, click, os, requests, ctypes
     from platform import system
     from colorama import Fore
 except ImportError as err:
