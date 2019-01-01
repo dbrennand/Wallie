@@ -1,9 +1,7 @@
 try:
     import subprocess, click, os, requests
-    from math import ceil
     from platform import system
-    from tqdm import tqdm
-    from huepy import yellow
+    from colorama import Fore
 except ImportError as err:
     print(f"Failed to import required modules: {err}")
 
@@ -12,17 +10,39 @@ def download_image(image_url, file_name):
     """Download the users specified image to the project directory.
     Returns:
         file_name string."""
+    def write_file(file_name, resp, bar):
+        """Write image file.
+        Params:
+            file_name: The file name.
+            resp: Requests response object.
+            bar: Either None (for no progress bar) or ProgressBar object."""
+        try:
+            with open(f"{file_name}.jpg", "wb") as f:
+                for chunk in resp.iter_content(1024):
+                    f.write(chunk)
+                    if bar is None:
+                        pass
+                    else:
+                        bar.update(1024)
+        except IOError:
+            click.secho(
+                f"Failed to create {file_name}.jpg", fg="bright_yellow", err=True)
+            exit()
+    # Start of download_image()
     with requests.get(image_url, stream=True) as resp:
         if ((resp.status_code) == (requests.codes.ok)):
-            block_size = 1024
-            total_size = int(resp.headers["content-length"])
-            try:
-                with open(f"{file_name}.jpg", "wb") as f:
-                    for chunk in tqdm(iterable=resp.iter_content(block_size), total=ceil(total_size//block_size), unit="KB", unit_scale=True, desc=f"Downloading {file_name}.jpg"):
-                        f.write(chunk)
-            except IOError:
-                click.secho(f"Failed to create {file_name}.jpg", fg="bright_yellow", err=True)
-                exit()
+            # Check for content-length header or transfer-encoding
+            # From: https://github.com/requests/requests/issues/4925
+            is_chunked = resp.headers.get("transfer-encoding", "") == "chunked"
+            content_length = resp.headers.get("content-length")
+            if not is_chunked and content_length.isdigit():
+                total_size = int(content_length)
+                with click.progressbar(length=total_size, show_eta=True, show_percent=True, fill_char=">", label=f"Downloading {file_name}.jpg", bar_template=click.style("%(label)s  [%(bar)s]  %(info)s", fg="bright_yellow")) as bar:
+                    # See write_file above.
+                    write_file(file_name, resp, bar)
+            else:
+                # Fails to get content-length. No progress bar.
+                write_file(file_name, resp, None)
         else:
             click.secho(f"{resp.raise_for_status()}", fg="bright_yellow")
             exit()
@@ -37,7 +57,9 @@ def present_images(images):
     for num, item in enumerate(images, 0):
         click.secho(
             f"""Image: {num} -- {item[0]["author_name"]}\nProfile: {item[0]["author_profile"]}\nImage Link: {item[0]["full_image"]}\n""", fg="bright_yellow")
-    user_choice = int(input(yellow("Select your preferred image: ")))
+    # Formats prompt all yellow coloured.
+    user_choice = int(click.prompt(click.style(
+        "Select your preferred image: ", fg="bright_yellow"), prompt_suffix=""))
     user_choice = images[user_choice]
     return user_choice
 
@@ -83,7 +105,8 @@ def check_os(abs_path):
                 return False
         # If None: get_linux_envrionment() returns None when envrionment cannot be determined.
         else:
-            click.secho("Your Linux desktop envrionment is not supported.", fg="bright_yellow")
+            click.secho(
+                "Your Linux desktop envrionment is not supported.", fg="bright_yellow")
             # return False if the command fails.
             return False
 
