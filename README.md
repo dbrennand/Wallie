@@ -13,11 +13,11 @@ Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper
 * KDE, Gnome, Lubuntu, mate.
 
 ## TODO
-* Add support for other OSs (Windows specifically) ✅
 * Add support for more APIs.
-* Exception handling for download_image(). 
+* Add support for other OSs (Windows specifically) ✅
+* Exception handling for download_image(). ✅
 * Remove wget dependancy and add progress bar. ✅
-* Correct colours on progress bar.
+* Correct colours on progress bar. ✅
 
 ## Dependancies
 Wallie currently requires:
@@ -26,10 +26,8 @@ Wallie currently requires:
 requests = "*"
 click = "*"
 colorama = "*"
-huepy = "*"
 pypexels = "*"
 pyunsplash = "*"
-tqdm = "*"
 
 [requires]
 python_version = "3.7"
