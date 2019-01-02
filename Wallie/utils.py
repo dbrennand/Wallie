@@ -12,7 +12,7 @@ def download_image(image_url, file_name):
         image_url: string: url for image download.
         file_name: string: file_name to use for file download.
     Returns:
-        file_name string."""
+        file_name: string."""
     def write_file(file_name, resp, bar):
         """Write image file.
         Params:
@@ -58,7 +58,7 @@ def present_images(images):
     Params:
         images: list.
     Returns:
-        user_choice list."""
+        user_choice: list."""
     for num, item in enumerate(images, 0):
         click.secho(
             f"""Image: {num} -- {item[0]["author_name"]}\nProfile: {item[0]["author_profile"]}\nImage Link: {item[0]["full_image"]}\n""", fg="bright_yellow")

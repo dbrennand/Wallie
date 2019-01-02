@@ -28,8 +28,6 @@ def unsplash_trigger_download(download_location):
     """Trigger a download event to Unsplash API.
     Params:
         download_location: string: The download url provided and required by unsplash API.
-    Returns:
-        None.
     More Info: https://medium.com/unsplash/unsplash-api-guidelines-triggering-a-download-c39b24e99e02"""
     try:
         resp = requests.get(download_location, headers={
