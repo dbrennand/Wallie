@@ -8,12 +8,15 @@ except ImportError as err:
 
 def download_image(image_url, file_name):
     """Download the users specified image to the project directory.
+    Params:
+        image_url: string: url for image download.
+        file_name: string: file_name to use for file download.
     Returns:
         file_name string."""
     def write_file(file_name, resp, bar):
         """Write image file.
         Params:
-            file_name: The file name.
+            file_name: string: The file name: from download_image()
             resp: Requests response object.
             bar: Either None (for no progress bar) or ProgressBar object."""
         try:
@@ -52,6 +55,8 @@ def download_image(image_url, file_name):
 
 def present_images(images):
     """Present image choices to the user and request choice.
+    Params:
+        images: list.
     Returns:
         user_choice list."""
     for num, item in enumerate(images, 0):
@@ -64,8 +69,41 @@ def present_images(images):
     return user_choice
 
 
+def get_linux_envrionment():
+    """Get the current linux desktop envrionment of the user
+    Returns:
+        command: string or None: The command to set the desktop environment.
+    https://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment"""
+    if os.environ.get("KDE_FULL_SESSION") == "true":
+        command = """
+                    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
+                        var allDesktops = desktops();
+                        print (allDesktops);
+                        for (i=0;i<allDesktops.length;i++) {{
+                            d = allDesktops[i];
+                            d.wallpaperPlugin = "org.kde.image";
+                            d.currentConfigGroup = Array("Wallpaper",
+                                                   "org.kde.image",
+                                                   "General");
+                            d.writeConfig("Image", "file:///{abs_path}")
+                        }}
+                    '
+                """
+    elif os.environ.get("DESKTOP_SESSION") == "gnome":
+        command = "gsettings set org.gnome.desktop.background picture-uri file://{abs_path}"
+    elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
+        command = "pcmanfm -w {abs_path} --wallpaper-mode=fit"
+    elif os.environ.get("DESKTOP_SESSION") == "mate":
+        command = "gsettings set org.mate.background picture-filename {abs_path}"
+    else:
+        command = None
+    return command
+
+
 def check_os(abs_path):
     """Check the operating system and run the respective desktop setting command
+    Params:
+        abs_path: string: The absolute path to the downloaded image file.
     Returns:
         False: If command fails to set desktop wallpaper.
         True: if the command successfully sets the desktop wallpaper."""
@@ -109,34 +147,3 @@ def check_os(abs_path):
                 "Your Linux desktop envrionment is not supported.", fg="bright_yellow")
             # return False if the command fails.
             return False
-
-
-def get_linux_envrionment():
-    """Get the current linux desktop envrionment of the user
-    Returns:
-        command: The command to set the desktop environment.
-    https://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment"""
-    if os.environ.get("KDE_FULL_SESSION") == "true":
-        command = """
-                    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
-                        var allDesktops = desktops();
-                        print (allDesktops);
-                        for (i=0;i<allDesktops.length;i++) {{
-                            d = allDesktops[i];
-                            d.wallpaperPlugin = "org.kde.image";
-                            d.currentConfigGroup = Array("Wallpaper",
-                                                   "org.kde.image",
-                                                   "General");
-                            d.writeConfig("Image", "file:///{abs_path}")
-                        }}
-                    '
-                """
-    elif os.environ.get("DESKTOP_SESSION") == "gnome":
-        command = "gsettings set org.gnome.desktop.background picture-uri file://{abs_path}"
-    elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
-        command = "pcmanfm -w {abs_path} --wallpaper-mode=fit"
-    elif os.environ.get("DESKTOP_SESSION") == "mate":
-        command = "gsettings set org.mate.background picture-filename {abs_path}"
-    else:
-        command = None
-    return command

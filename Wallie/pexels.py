@@ -7,8 +7,10 @@ except ImportError as err:
 
 def pexels_parse_resp(subject):
     """From Pexels API RESP, collect the top 4 images from results.
+    Params:
+        subject: string: The subject to use for the image search.
     Returns:
-        images nested dict."""
+        images: nested dict."""
     py_pexel = PyPexels(api_key=PEXELS_API_KEY)
     results = py_pexel.search(query=subject, per_page=4)
     images = []
