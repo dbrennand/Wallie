@@ -52,7 +52,7 @@ def wallie_version(ctx, param, value):
 
 @click.command()
 def clear_images():
-    """Clears all previously downloaded .jpg files"""
+    """Clears all previously downloaded .jpg files."""
     for root, dirs, files in walk("./"):
         for file in files:
             if file.lower().endswith(".jpg"):
@@ -60,10 +60,10 @@ def clear_images():
                 remove(join(root, file))
 
 
-@click.option('--version', "--v", is_flag=True, callback=wallie_version, expose_value=False, is_eager=True)
+@click.option('--version', "--v", is_flag=True, callback=wallie_version, expose_value=False, is_eager=True, help="Show the version number of Wallie.")
 @click.group()
 def main():
-    """Entry point for CLI"""
+    """Wallie is a CLI which can set your device desktop wallpaper!"""
     pass
 
 
