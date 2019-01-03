@@ -5,12 +5,16 @@ Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper
 ## Currently Supported APIs
 * Unsplash API
 * Pexels API.
+* Pixabay API.
 
 ## OSs Supported
 * Windows, Mac, see linux support below!
 
 ### Supported Linux desktop envrionments.
 * KDE, Gnome, Lubuntu, mate.
+
+##Usage
+![Wallie help](Wallie_help.png)
 
 ## TODO
 * Add support for more APIs.
@@ -28,6 +32,7 @@ click = "*"
 colorama = "*"
 pypexels = "*"
 pyunsplash = "*"
+python-pixabay = "*"
 
 [requires]
 python_version = "3.7"
