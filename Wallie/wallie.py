@@ -1,11 +1,13 @@
 try:
     # File imports.
     import click
-    from os.path import abspath
+    from os.path import abspath, join
+    from os import walk, remove
     # Other file imports.
     from utils import download_image, present_images, check_os
     from unsplash import unsplash_parse_resp, unsplash_trigger_download
     from pexels import pexels_parse_resp
+    from pixabay import pixabay_parse_resp
 except ImportError as err:
     print(f"Failed to import modules: {err}")
 
@@ -22,6 +24,9 @@ def set(api, subject):
         unsplash_trigger_download(user_choice[0]["download_location"])
     elif api == "pexels":
         images = pexels_parse_resp(subject)
+        user_choice = present_images(images)
+    elif api == "pixabay":
+        images = pixabay_parse_resp(subject)
         user_choice = present_images(images)
     else:
         click.secho("Invalid API option.", fg="bright_yellow")
@@ -45,6 +50,16 @@ def wallie_version(ctx, param, value):
     ctx.exit()
 
 
+@click.command()
+def clear_images():
+    """Clears all previously downloaded .jpg files"""
+    for root, dirs, files in walk("./"):
+        for file in files:
+            if file.lower().endswith(".jpg"):
+                click.secho(f"Removing {file}...", fg="bright_yellow")
+                remove(join(root, file))
+
+
 @click.option('--version', "--v", is_flag=True, callback=wallie_version, expose_value=False, is_eager=True)
 @click.group()
 def main():
@@ -54,5 +69,6 @@ def main():
 
 # Adding Commands to application.
 main.add_command(set)
+main.add_command(clear_images)
 if __name__ == "__main__":
     main()
