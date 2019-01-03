@@ -13,7 +13,7 @@ Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper
 ## Supported Linux desktop envrionments.
 * KDE, Gnome, Lubuntu, mate.
 
-##Usage
+## Usage
 ![Wallie help](Wallie_help.png)
 
 ## TODO
