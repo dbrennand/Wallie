@@ -13,6 +13,7 @@ click = "*"
 colorama = "*"
 pypexels = "*"
 pyunsplash = "*"
+python-pixabay = "*"
 
 [requires]
 python_version = "3.7"
