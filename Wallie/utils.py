@@ -44,7 +44,7 @@ def download_image(image_url, file_name):
                     # See write_file above.
                     write_file(file_name, resp, bar)
             else:
-                # Fails to get content-length. No progress bar.
+                # Fails to get content-length. No progress bar as progress bar requires total_size.
                 write_file(file_name, resp, None)
         else:
             click.secho(f"{resp.raise_for_status()}", fg="bright_yellow")
