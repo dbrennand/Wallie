@@ -69,8 +69,8 @@ def present_images(images):
     return user_choice
 
 
-def get_linux_envrionment():
-    """Get the current linux desktop envrionment of the user
+def get_linux_environment():
+    """Get the current linux desktop environment of the user
     Returns:
         command: string or None: The command to set the desktop environment.
     https://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment"""
@@ -130,7 +130,7 @@ def check_os(abs_path):
             # return False if the command fails.
             return False
     elif os_name == "Linux":
-        command = get_linux_envrionment()
+        command = get_linux_environment()
         if command is not None:
             try:
                 subprocess.run(command.format(abs_path=abs_path), shell=True)
@@ -141,9 +141,9 @@ def check_os(abs_path):
                     f"Failed to set desktop wallpaper with the following error:\n{err}", fg="bright_yellow")
                 # return False if the command fails.
                 return False
-        # If None: get_linux_envrionment() returns None when envrionment cannot be determined.
+        # If None: get_linux_environment() returns None when envrionment cannot be determined.
         else:
             click.secho(
-                "Your Linux desktop envrionment is not supported.", fg="bright_yellow")
+                "Your Linux desktop environment is not supported.", fg="bright_yellow")
             # return False if the command fails.
             return False
