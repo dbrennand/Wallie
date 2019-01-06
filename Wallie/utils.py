@@ -89,7 +89,7 @@ def get_linux_envrionment():
                         }}
                     '
                 """
-    elif os.environ.get("DESKTOP_SESSION") == "gnome":
+    elif os.environ.get("DESKTOP_SESSION") == "gnome" or "ubuntu":
         command = "gsettings set org.gnome.desktop.background picture-uri file://{abs_path}"
     elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
         command = "pcmanfm -w {abs_path} --wallpaper-mode=fit"
