@@ -1,11 +1,11 @@
 # Wallie
-Pronounced "Wall-E", Wallie is a CLI which can set your device desktop wallpaper!
+Wallie is a CLI which can set your device desktop wallpaper!
 ![Wallie Demo](Wallie_Demo.gif)
 
 ## Currently Supported APIs
 * Unsplash API
-* Pexels API.
-* Pixabay API.
+* Pexels API
+* Pixabay API
 
 ## OSs Supported
 * Windows, Mac, Linux support below (UNTESTED)
