@@ -58,6 +58,7 @@ def clear_images():
             if file.lower().endswith(".jpg"):
                 click.secho(f"Removing {file}...", fg="bright_yellow")
                 remove(join(root, file))
+    click.secho("Complete.", fg="bright_yellow")
 
 
 @click.option('--version', "--v", is_flag=True, callback=wallie_version, expose_value=False, is_eager=True, help="Show the version number of Wallie.")
