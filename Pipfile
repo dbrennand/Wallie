@@ -4,8 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pep8 = "*"
-autopep8 = "*"
+black = "*"
 
 [packages]
 requests = "*"
@@ -17,3 +16,6 @@ python-pixabay = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

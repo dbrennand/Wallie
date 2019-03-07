@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9c419f2e0855a7ac871e194eda66afcaabea75d16dcefe2b664db11da41e2e32"
+            "sha256": "bb4a3b7be350076cbe7c506e6e5974f0cc5d71be44404fd9e73630e156363a61"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -55,25 +55,24 @@
         },
         "pypexels": {
             "hashes": [
-                "sha256:35cf3a5abd5a1d11d96be1285d55bba18fc4392c83b782e9aa74058bfc78c9f8"
+                "sha256:48b90e2935084ea83b622a056c0e0af0a06bca50b86b8858e33c827fbe36620c"
             ],
             "index": "pypi",
-            "version": "==1.0.0b2"
+            "version": "==1.0.0b3"
         },
         "python-pixabay": {
             "hashes": [
-                "sha256:324290dc2a73d2f85bc92ab880b68e406f46789507aea26a2e671bacf71fa990",
-                "sha256:7d5b3e19f5a063275f1e4326a720e687ebb2f15e019e5b77be3c6d64bcdc3820"
+                "sha256:47a7be16633ea09c126d143540c86f40591630f94fdae069da0b98976640c964"
             ],
             "index": "pypi",
-            "version": "==1.4"
+            "version": "==2.4"
         },
         "pyunsplash": {
             "hashes": [
-                "sha256:db33e384c4d2e38c1991738830fefaaee964d3287f2ec603a38084850292ebf9"
+                "sha256:56e616f7523d368e18849364818097652d5a4f89dd10f52c0a5e4ce5ecd88410"
             ],
             "index": "pypi",
-            "version": "==1.0.0b7"
+            "version": "==1.0.0b8"
         },
         "requests": {
             "hashes": [
@@ -82,6 +81,13 @@
             ],
             "index": "pypi",
             "version": "==2.21.0"
+        },
+        "slumber": {
+            "hashes": [
+                "sha256:298d0461657337416aa53c9fe54864cb5960a009beceb2058b17fa98dfb01e9b",
+                "sha256:96899ce914f8d7862ce34f4e50af3a82e35588ab61b4912b85844479f4d177cb"
+            ],
+            "version": "==0.7.1"
         },
         "urllib3": {
             "hashes": [
@@ -92,27 +98,42 @@
         }
     },
     "develop": {
-        "autopep8": {
+        "appdirs": {
             "hashes": [
-                "sha256:33d2b5325b7e1afb4240814fe982eea3a92ebea712869bfd08b3c0393404248c"
+                "sha256:9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92",
+                "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"
             ],
-            "index": "pypi",
             "version": "==1.4.3"
         },
-        "pep8": {
+        "attrs": {
             "hashes": [
-                "sha256:b22cfae5db09833bb9bd7c8463b53e1a9c9b39f12e304a8d0bba729c501827ee",
-                "sha256:fe249b52e20498e59e0b5c5256aa52ee99fc295b26ec9eaa85776ffdb9fe6374"
+                "sha256:69c0dbf2ed392de1cb5ec704444b08a5ef81680a61cb899dc08127123af36a79",
+                "sha256:f0b870f674851ecbfbbbd364d6b5cbdff9dcedbc7f3f5e18a6891057f21fe399"
+            ],
+            "version": "==19.1.0"
+        },
+        "black": {
+            "hashes": [
+                "sha256:817243426042db1d36617910df579a54f1afd659adb96fc5032fcf4b36209739",
+                "sha256:e030a9a28f542debc08acceb273f228ac422798e5215ba2a791a6ddeaaca22a5"
             ],
             "index": "pypi",
-            "version": "==1.7.1"
+            "version": "==18.9b0"
         },
-        "pycodestyle": {
+        "click": {
             "hashes": [
-                "sha256:cbc619d09254895b0d12c2c691e237b2e91e9b2ecf5e84c26b35400f93dcfb83",
-                "sha256:cbfca99bd594a10f674d0cd97a3d802a1fdef635d4361e1a2658de47ed261e3a"
+                "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13",
+                "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
             ],
-            "version": "==2.4.0"
+            "index": "pypi",
+            "version": "==7.0"
+        },
+        "toml": {
+            "hashes": [
+                "sha256:229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c",
+                "sha256:235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
+            ],
+            "version": "==0.10.0"
         }
     }
 }

@@ -7,25 +7,21 @@ Wallie is a CLI which can set your device desktop wallpaper!
 * Pexels API
 * Pixabay API
 
-## OSs Supported
-* Windows, Mac, Linux support below (UNTESTED)
+## OS Support
+* Windows, Mac, Linux (see below).
 
-## Supported Linux desktop environments (UNTESTED).
-* KDE, Gnome, Lubuntu, mate.
+## Supported Linux desktop environments
+* KDE, Gnome (Confirmed), Lubuntu, mate.
 
 ## Usage
 ![Wallie help](Wallie_help.png)
 
-## TODO
-* Add support for more APIs.
-* Add support for other OSs (Windows specifically) ✅
-* Exception handling for download_image(). ✅
-* Remove wget dependancy and add progress bar. ✅
-* Correct colours on progress bar. ✅
-
 ## Dependancies
 Wallie currently requires:
 ```
+[dev-packages]
+black = "*"
+
 [packages]
 requests = "*"
 click = "*"
@@ -55,4 +51,4 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 License 
 
 * Requests created by [Kenneth Reitz (kennethreitz)](https://github.com/kennethreitz) and respective contributors.
 * Pypexels and Pyunsplash wrappers by [salvoventura](https://github.com/salvoventura) and respective contributors.
-
+* python-pixabay by [momozor](https://github.com/momozor) and respective contributors.
