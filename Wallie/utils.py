@@ -74,9 +74,9 @@ def download_image(image_url, file_name):
 
 def apply_wallpaper(user_choice, file_name):
     """Apply the Wallpaper for downloaded image.
-    Params: user_choice: List
+    Params: user_choice: dict
     filename: filename to be used when saving image to disk."""
-    file_name = download_image(user_choice[0]["full_image"], file_name)
+    file_name = download_image(user_choice["full_image"], file_name)
     click.secho(f"Attempting to set desktop image to {file_name}", fg="bright_yellow")
     abs_path = os.path.abspath(f"./{file_name}")
     check_os(abs_path)
@@ -88,10 +88,10 @@ def present_images(images):
     Params:
         images: list.
     Returns:
-        user_choice: list."""
+        user_choice: dict."""
     for num, item in enumerate(images, 0):
         click.secho(
-            f"""Image: {num} -- {item[0]["author_name"]}\nProfile: {item[0]["author_profile"]}\nImage Link: {item[0]["full_image"]}\n""",
+            f"""Image: {num} -- {item["author_name"]}\nProfile: {item["author_profile"]}\nImage Link: {item["full_image"]}\n""",
             fg="bright_yellow",
         )
     # Formats prompt all yellow coloured.

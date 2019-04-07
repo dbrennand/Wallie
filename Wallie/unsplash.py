@@ -15,7 +15,7 @@ def unsplash_parse_resp(subject):
     Params:
         subject: string: The subject to use for the image search.
     Returns:
-        images: nested dict.
+        images: list.
     Exceptions:
         TypeError: Occurs when resp fails to provide required data."""
     py_un = PyUnsplash(api_key=UNSPLASH_CLIENT_ID)
@@ -34,9 +34,7 @@ def unsplash_parse_resp(subject):
                 "author_profile": f"{item.body['user']['links']['html']}?utm_source=Wallie&utm_medium=referral",
                 "download_location": item.link_download_location,
             }
-            image_list = []
-            image_list.append(image_info)
-            images.append(image_list)
+            images.append(image_info)
         return images
     except AttributeError as err:
         handle_err(

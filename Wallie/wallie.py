@@ -35,7 +35,7 @@ def set(api, subject):
     if api == "unsplash":
         images = unsplash_parse_resp(subject)
         user_choice = present_images(images)
-        unsplash_trigger_download(user_choice[0]["download_location"])
+        unsplash_trigger_download(user_choice["download_location"])
     elif api == "pexels":
         images = pexels_parse_resp(subject)
         user_choice = present_images(images)
@@ -61,7 +61,7 @@ def random(api):
     if api == "unsplash":
         images = unsplash_parse_resp(None)
         user_choice = present_images(images)
-        unsplash_trigger_download(user_choice[0]["download_location"])
+        unsplash_trigger_download(user_choice["download_location"])
     elif api == "pexels":
         images = pexels_parse_resp(None)
         user_choice = present_images(images)
@@ -77,7 +77,7 @@ def wallie_version(ctx, param, value):
     """Prints the version of Wallie."""
     if not value or ctx.resilient_parsing:
         return
-    click.secho("Version - 1.1", fg="bright_yellow")
+    click.secho("Version - 1.2", fg="bright_yellow")
     ctx.exit()
 
 

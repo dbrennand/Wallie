@@ -14,7 +14,7 @@ def pexels_parse_resp(subject):
     Params:
         subject: string: The subject to use for the image search.
     Returns:
-        images: nested dict.
+        images: list.
     Exceptions:
         AttributeError: Occurs when resp fails to provide required data."""
     py_pexel = PyPexels(api_key=PEXELS_API_KEY)
@@ -31,9 +31,7 @@ def pexels_parse_resp(subject):
                 "image_id": item.id,
                 "author_profile": item.photographer_url,
             }
-            image_list = []
-            image_list.append(image_info)
-            images.append(image_list)
+            images.append(image_info)
         return images
     except AttributeError as err:
         handle_err(
