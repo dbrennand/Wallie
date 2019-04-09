@@ -2,16 +2,19 @@
 Wallie is a CLI which can set your device desktop wallpaper!
 ![Wallie Demo](Wallie_Demo.gif)
 
-## Currently Supported APIs
-* Unsplash API
-* Pexels API
-* Pixabay API
+## Supported APIs
+* Unsplash
+* Pexels
+* Pixabay 
 
 ## OS Support
-* Windows, Mac, Linux (see below).
+* Windows, Mac, Linux
 
-## Supported Linux desktop environments
-* KDE, Gnome (Confirmed), Lubuntu, mate.
+## Supported Linux Environments
+* KDE (Tested on Kubuntu)
+* GNOME (Tested on Ubuntu)
+* LX(DE/QT) (Tested on Lubuntu)
+* Mate (Tested on Ubuntu Mate)
 
 ## Usage
 ![Wallie help](Wallie_help.png)

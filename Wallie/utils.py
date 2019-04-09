@@ -125,12 +125,12 @@ def get_linux_environment():
                         }}
                     '
                 """
-    elif os.environ.get("DESKTOP_SESSION") == "gnome" or "ubuntu":
+    elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
+        command = "pcmanfm-qt -w {abs_path}"
+    elif os.environ.get("DESKTOP_SESSION") == "ubuntu":
         command = (
             "gsettings set org.gnome.desktop.background picture-uri file://{abs_path}"
         )
-    elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
-        command = "pcmanfm -w {abs_path} --wallpaper-mode=fit"
     elif os.environ.get("DESKTOP_SESSION") == "mate":
         command = "gsettings set org.mate.background picture-filename {abs_path}"
     else:
@@ -142,9 +142,6 @@ def check_os(abs_path):
     """Check the operating system and run the respective desktop setting command
     Params:
         abs_path: string: The absolute path to the downloaded image file.
-    Returns:
-        False: If command fails to set desktop wallpaper.
-        True: if the command successfully sets the desktop wallpaper.
     Exceptions:
         subprocess.CalledProcessError: Occurs when MacOS script fails to set wallpaper.
         Unknown windows exception: TODO Requires looking into. Occurs when Windows command fails to set wallpaper.
