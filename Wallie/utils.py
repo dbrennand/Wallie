@@ -1,7 +1,7 @@
 try:
     # File imports.
     import subprocess, click, os, requests, ctypes
-    from platform import system
+    from platform import system, dist
     from colorama import Fore
 except ImportError as err:
     print(f"Failed to import required modules: {err}")
@@ -126,7 +126,10 @@ def get_linux_environment():
                     '
                 """
     elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
-        command = "pcmanfm-qt -w {abs_path}"
+        if float(dist()[1]) <= 18.04:
+            command = "pcmanfm -w {abs_path}"
+        elif float(dist()[1]) > 18.04:
+            command = "pcmanfm-qt -w {abs_path}"
     elif os.environ.get("DESKTOP_SESSION") == "ubuntu":
         command = (
             "gsettings set org.gnome.desktop.background picture-uri file://{abs_path}"

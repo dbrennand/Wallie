@@ -13,7 +13,7 @@ Wallie is a CLI which can set your device desktop wallpaper!
 ## Supported Linux Environments
 * KDE (Tested on Kubuntu)
 * GNOME (Tested on Ubuntu)
-* LX(DE/QT) (Tested on Lubuntu)
+* LX(DE/QT) (Tested on Lubuntu 18.04 and 18.10)
 * Mate (Tested on Ubuntu Mate)
 
 ## Usage
@@ -45,6 +45,7 @@ pipenv install
 ## Authors -- Contributors
 
 * **Daniel Brennand** - *Author* - [Dextroz](https://github.com/Dextroz)
+* **Momozor** - *Contributor* - [Momozor](https://github.com/momozor)
 
 ## License
 
