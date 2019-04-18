@@ -19,11 +19,12 @@ Wallie is a CLI which can set your device desktop wallpaper!
 ## Usage
 ![Wallie help](Wallie_help.png)
 
-## Dependancies
+## Dependencies
 Wallie currently requires:
 ```
 [dev-packages]
 black = "*"
+pytest = "*"
 
 [packages]
 requests = "*"
@@ -37,10 +38,14 @@ python-pixabay = "*"
 python_version = "3.7"
 ```
 
-Install all dependancies using the following command:
+Install all dependencies using the following command:
 ```
 pipenv install
 ```
+
+## Testing
+
+Go to Wallie subdirectory, and run `python3 -m pytest tests`
 
 ## Authors -- Contributors
 

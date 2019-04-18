@@ -126,9 +126,10 @@ def get_linux_environment():
                     '
                 """
     elif os.environ.get("DESKTOP_SESSION") == "Lubuntu":
-        if float(dist()[1]) <= 18.04:
+        lubuntu_version = float(dist()[1])
+        if lubuntu_version <= 18.04:
             command = "pcmanfm -w {abs_path}"
-        elif float(dist()[1]) > 18.04:
+        elif lubuntu_version > 18.04:
             command = "pcmanfm-qt -w {abs_path}"
     elif os.environ.get("DESKTOP_SESSION") == "ubuntu":
         command = (

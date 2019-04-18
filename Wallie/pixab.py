@@ -4,13 +4,26 @@ try:
 
     # Other file imports.
     from config import PIXABAY_API_KEY
+    from random import randint, choice
     from utils import handle_err
 except ImportError as err:
     print(f"Failed to import modules: {err}")
 
+def randomize_query():
+    """
+    Randomize query search
+    note that some of the queries probably has less than 10 pages
+        probably need to do a bit research before adding a new query
+        to this list.
+    :rtype: string: The subject to use for the image search.
+    """
+    queries = ["bird","flower","cat",
+               "dog", "computer", "abstract", "magic"]
+
+    return choice(queries)
 
 def pixabay_parse_resp(subject):
-    """From Pexels API RESP, collect the top 4 images from results.
+    """From Pixabay API RESP, collect the top 4 images from results.
     Params:
         subject: string: The subject to use for the image search.
     Returns:
@@ -19,8 +32,9 @@ def pixabay_parse_resp(subject):
     if subject is not None:
         resp = pix.search(q=subject, per_page=4, image_type="photo")
     else:
-        # Carry out default search. No random endpoint for pixabay API.
-        resp = pix.search(per_page=4, image_type="photo")
+        # give more randomized image selections
+        resp = pix.search(q=randomize_query(), per_page=4,
+                          image_type="photo", page=randint(1, 10))
     images = []
     try:
         for num, item in enumerate(resp["hits"], 1):
