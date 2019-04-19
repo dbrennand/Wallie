@@ -9,32 +9,32 @@ try:
 except ImportError as err:
     print(f"Failed to import modules: {err}")
 
+
 def randomize_query():
     """
-    Randomize query search
-    note that some of the queries probably has less than 10 pages
-        probably need to do a bit research before adding a new query
-        to this list.
-    :rtype: string: The subject to use for the image search.
+    Randomize query search.
+    Note: Some of the queries may have less than 10 pages. Caution adding a new query to list(queries).
+        :rtype string: The subject to use for the image search.
     """
-    queries = ["bird","flower","cat",
-               "dog", "computer", "abstract", "magic"]
-
+    queries = ["bird", "flower", "cat", "dog", "computer", "abstract", "magic"]
     return choice(queries)
 
+
 def pixabay_parse_resp(subject):
-    """From Pixabay API RESP, collect the top 4 images from results.
-    Params:
-        subject: string: The subject to use for the image search.
-    Returns:
-        images: list."""
+    """
+    From Pixabay API, collect the top 4 images from results.
+        :param subject: The subject to be used for the image search or type(None). If None, random photos are fetched.
+        :rtype images: A list containing data on the fetched images.
+        :except AttributeErrror: Occurs when resp fails to fetch images and enumerate cannot parse resp.
+    """
     pix = Image(PIXABAY_API_KEY)
     if subject is not None:
         resp = pix.search(q=subject, per_page=4, image_type="photo")
     else:
         # give more randomized image selections
-        resp = pix.search(q=randomize_query(), per_page=4,
-                          image_type="photo", page=randint(1, 10))
+        resp = pix.search(
+            q=randomize_query(), per_page=4, image_type="photo", page=randint(1, 10)
+        )
     images = []
     try:
         for num, item in enumerate(resp["hits"], 1):

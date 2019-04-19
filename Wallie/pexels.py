@@ -10,13 +10,12 @@ except ImportError as err:
 
 
 def pexels_parse_resp(subject):
-    """From Pexels API RESP, collect the top 4 images from results.
-    Params:
-        subject: string: The subject to use for the image search.
-    Returns:
-        images: list.
-    Exceptions:
-        AttributeError: Occurs when resp fails to provide required data."""
+    """
+    From Pexels API resp, collect the top 4 images from results.
+        :param subject: The subject to be used for the image search or type(None). If None, random photos are fetched.
+        :rtype images: A list containing data on the fetched images.
+        :except AttributeErrror: Occurs when resp fails to fetch images and enumerate cannot parse resp.
+    """
     py_pexel = PyPexels(api_key=PEXELS_API_KEY)
     if subject is not None:
         resp = py_pexel.search(query=subject, per_page=4)

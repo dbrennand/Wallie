@@ -11,13 +11,12 @@ except ImportError as err:
 
 
 def unsplash_parse_resp(subject):
-    """From Unsplash API, collect the top 4 images from results.
-    Params:
-        subject: string: The subject to use for the image search.
-    Returns:
-        images: list.
-    Exceptions:
-        TypeError: Occurs when resp fails to provide required data."""
+    """
+    From Unsplash API, collect the top 4 images from results.
+        :param subject: The subject to be used for the image search or type(None). If None, random photos are fetched.
+        :rtype images: A list containing data on the fetched images.
+        :except AttributeErrror: Occurs when resp fails to fetch images and enumerate cannot parse resp.
+    """
     py_un = PyUnsplash(api_key=UNSPLASH_CLIENT_ID)
     images = []
     if subject is not None:
@@ -43,26 +42,20 @@ def unsplash_parse_resp(subject):
 
 
 def unsplash_trigger_download(download_location):
-    """Trigger a download event to Unsplash API.
-    Params:
-        download_location: string: The download url provided and required by unsplash API.
-    More Info: https://medium.com/unsplash/unsplash-api-guidelines-triggering-a-download-c39b24e99e02"""
-    try:
-        resp = requests.get(
-            download_location,
-            headers={
-                "Accept-Version": "v1",
-                "Authorization": f"Client-ID {UNSPLASH_CLIENT_ID}",
-            },
-        )
-        if (resp.status_code) == (requests.codes.ok):
-            pass
-        else:
-            # Raise the error if status code is not ok ie evaluates to True.
-            handle_err(f"Unsplash trigger download failed: {resp.raise_for_status()}")
-    except requests.exceptions.TooManyRedirects as err:
-        handle_err(f"Unsplash trigger download failed: {err}")
-    except requests.exceptions.Timeout as err:
-        handle_err(f"Unsplash trigger download failed: {err}")
-    except requests.exceptions.HTTPError as err:
-        handle_err(f"Unsplash trigger download failed: {err}")
+    """
+    Trigger a download event to Unsplash API. Required by Unsplash API.
+    See: https://help.unsplash.com/api-guidelines/more-on-each-guideline/guideline-triggering-a-download
+        :param download_location: A string url to trigger download to Unsplash API.
+    """
+    resp = requests.get(
+        download_location,
+        headers={
+            "Accept-Version": "v1",
+            "Authorization": f"Client-ID {UNSPLASH_CLIENT_ID}",
+        },
+    )
+    if (resp.status_code) == (requests.codes.ok):
+        pass
+    else:
+        # Raise the error if status code is not ok ie evaluates to True.
+        handle_err(f"Unsplash trigger download failed: {resp.raise_for_status()}")

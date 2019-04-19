@@ -8,29 +8,31 @@ except ImportError as err:
 
 
 def handle_err(error):
-    """Present errors which occur."""
+    """
+    Present errors which occur.
+        :param error: The string of the error which occurs.
+    """
     click.secho(f"An error occured: {error}", fg="bright_yellow", err=True)
     exit()
 
 
 def download_image(image_url, file_name):
-    """Download the users specified image to the project directory.
-    Params:
-        image_url: string: url for image download.
-        file_name: string: file_name to use for file download.
-    Returns:
-        file_name: string.
-    Exceptions:
-        resp.raise_for_status(): Occurs if HTTP resp code is not 200."""
+    """
+    Download the users specified image to the project directory.
+        :param image_url: The string url for the image to be downloaded.
+        :param file_name: The string file_name to use for the downloaded image.
+        :rtype: The string of the file_name downloaded.
+        :except resp.raise_for_status: Occurs if HTTP resp_code is not 200.
+    """
 
     def write_file(file_name, resp, bar):
-        """Write image file.
-        Params:
-            file_name: string: The file name: from download_image()
-            resp: Requests response object.
-            bar: Either None (for no progress bar) or ProgressBar object.
-        Exceptions:
-            IOError: Occurs if .jpg file fails to be created."""
+        """
+        Writes the image file to disk.
+            :param file_name: The string file_name to use for the downloaded image.
+            :param resp: The requests Response object.
+            :param bar: The click.progressbar object or type(None): no progress bar.
+            :except IOError: Occurs if .jpg file fails to be written to disk.
+        """
         try:
             with open(f"{file_name}.jpg", "wb") as f:
                 for chunk in resp.iter_content(1024):
@@ -72,23 +74,12 @@ def download_image(image_url, file_name):
     return f"{file_name}.jpg"
 
 
-def apply_wallpaper(user_choice, file_name):
-    """Apply the Wallpaper for downloaded image.
-    Params: user_choice: dict
-    filename: filename to be used when saving image to disk."""
-    file_name = download_image(user_choice["full_image"], file_name)
-    click.secho(f"Attempting to set desktop image to {file_name}", fg="bright_yellow")
-    abs_path = os.path.abspath(f"./{file_name}")
-    check_os(abs_path)
-    click.secho("Wallpaper set successfully!", fg="bright_yellow")
-
-
 def present_images(images):
-    """Present image choices to the user and request choice.
-    Params:
-        images: list.
-    Returns:
-        user_choice: dict."""
+    """
+    Present image choices to the user and request the user to choose one.
+        :param images: A list containing data on the images retrieved.
+        :rtype user_choice: A dict containing data on the users chosen image.
+    """
     for num, item in enumerate(images, 0):
         click.secho(
             f"""Image: {num} -- {item["author_name"]}\nProfile: {item["author_profile"]}\nImage Link: {item["full_image"]}\n""",
@@ -106,10 +97,10 @@ def present_images(images):
 
 
 def get_linux_environment():
-    """Get the current linux desktop environment of the user
-    Returns:
-        command: string or None: The command to set the desktop environment.
-    https://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment"""
+    """
+    Determine the users current Linux desktop environment.
+        :rtype command: The string command for the specific desktop environment or type(None).
+    """
     if os.environ.get("KDE_FULL_SESSION") == "true":
         command = """
                     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript '
@@ -143,13 +134,12 @@ def get_linux_environment():
 
 
 def check_os(abs_path):
-    """Check the operating system and run the respective desktop setting command
-    Params:
-        abs_path: string: The absolute path to the downloaded image file.
-    Exceptions:
-        subprocess.CalledProcessError: Occurs when MacOS script fails to set wallpaper.
-        Unknown windows exception: TODO Requires looking into. Occurs when Windows command fails to set wallpaper.
-        subprocess.CalledProcessError: Occurs Linux command fails to set wallpaper."""
+    """
+    Determine the users operating system and run the respective desktop command.
+        :param abs_path: The string PATH to the downloaded image.
+        :except subprocess.CalledProcessError: Occurs when MacOS script or Linux command fails to set wallpaper.
+        :except Unknown Windows Exception: Requires looking into. Occurs when Windows command fails to set wallpaper.
+    """
     os_name = system()
     if os_name == "Darwin":
         try:
@@ -173,3 +163,17 @@ def check_os(abs_path):
         # If None: get_linux_environment() returns None when desktop envrionment cannot be determined.
         else:
             handle_err("Your Linux desktop envrionment is not supported.")
+
+
+def apply_wallpaper(user_choice, file_name):
+    """
+    Apply the wallpaper for the downloaded image.
+        :param user_choice: A dict containing data on the users chosen image.
+        :param file_name: The string file_name to use for the downloaded image.
+    """
+    file_name = download_image(user_choice["full_image"], file_name)
+    click.secho(f"Attempting to set desktop image to {file_name}", fg="bright_yellow")
+    # Fetch the absolute PATH to the image on disk.
+    abs_path = os.path.abspath(f"./{file_name}")
+    check_os(abs_path)
+    click.secho("Wallpaper set successfully!", fg="bright_yellow")

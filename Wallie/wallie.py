@@ -30,7 +30,10 @@ except ImportError as err:
 )
 @click.argument("subject", default="Space", type=str)
 def set(api, subject):
-    """Sets the Wallpaper of the device."""
+    """Sets the Wallpaper of the device.
+        :param api: The api to fetch images from.
+        :param subject: The subject of the image to be fetched.
+    """
     click.secho(f"Searching {api} for {subject} images...", fg="bright_yellow")
     if api == "unsplash":
         images = unsplash_parse_resp(subject)
@@ -57,7 +60,10 @@ def set(api, subject):
     type=str,
 )
 def random(api):
-    """Sets the Wallpaper to a random image."""
+    """
+    Sets the Wallpaper to a random image.
+        :param api: The api option to fetch images from.
+    """
     if api == "unsplash":
         images = unsplash_parse_resp(None)
         user_choice = present_images(images)
@@ -74,7 +80,9 @@ def random(api):
 
 
 def wallie_version(ctx, param, value):
-    """Prints the version of Wallie."""
+    """
+    Prints the version of Wallie.
+    """
     if not value or ctx.resilient_parsing:
         return
     click.secho("Version - 1.3.2", fg="bright_yellow")
@@ -83,7 +91,9 @@ def wallie_version(ctx, param, value):
 
 @click.command()
 def clear_images():
-    """Clears all previously downloaded .jpg files."""
+    """
+    Clears all previously downloaded .jpg files.
+    """
     for root, dirs, files in walk("./"):
         for file in files:
             if file.lower().endswith(".jpg"):
@@ -103,11 +113,13 @@ def clear_images():
 )
 @click.group()
 def main():
-    """Wallie is a CLI which can set your device desktop wallpaper!"""
+    """
+    Wallie is a CLI which can set your device desktop wallpaper!
+    """
     pass
 
 
-# Adding Commands to application.
+# Adding Commands to Wallie.
 main.add_command(set)
 main.add_command(clear_images)
 main.add_command(random)
