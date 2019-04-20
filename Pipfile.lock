@@ -62,11 +62,10 @@
         },
         "python-pixabay": {
             "hashes": [
-                "sha256:1dd175adc27c142553de98bd0f4494dea85cece9c4bf81fb586127e76a78a813",
-                "sha256:282581a71ffd99ef59f32f2371845cee58e671a0ff67ee81572d65b36867ce40"
+                "sha256:74ce8b1ae60c16eebafa480c5464ff985926cf8f0a0093e01717dfbfa395f4bf"
             ],
             "index": "pypi",
-            "version": "==2.9"
+            "version": "==3.0"
         },
         "pyunsplash": {
             "hashes": [
@@ -85,10 +84,10 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:61bf29cada3fc2fbefad4fdf059ea4bd1b4a86d2b6d15e1c7c0b582b9752fe39",
-                "sha256:de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22"
+                "sha256:4c291ca23bbb55c76518905869ef34bdd5f0e46af7afe6861e8375643ffee1a0",
+                "sha256:9a247273df709c4fedb38c711e44292304f73f39ab01beda9f6b9fc375669ac3"
             ],
-            "version": "==1.24.1"
+            "version": "==1.24.2"
         }
     },
     "develop": {
