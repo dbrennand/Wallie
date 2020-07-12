@@ -49,7 +49,7 @@ Go to Wallie subdirectory, and run `python3 -m pytest tests`
 
 ## Authors -- Contributors
 
-* **Dextroz** - *Author* - [Dextroz](https://github.com/Dextroz)
+* **dbrennand** - *Author* - [dbrennand](https://github.com/dbrennand)
 * **Momozor** - *Contributor* - [Momozor](https://github.com/momozor)
 
 ## License
